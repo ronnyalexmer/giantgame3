@@ -1,6 +1,5 @@
 package org.escoladeltreball.giantgame;
 
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -11,18 +10,19 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
- * Created by jmendez on 3/13/17.
+ * Created by jmendez on 3/16/17.
  */
 
-public class Player extends Sprite {
+public class Cloud extends Sprite {
 
-    // mon fisic
     private World world;
     private Body body;
+    private String cloudName;
 
-    public Player(World world, String name, float x, float y) {
-        super(new Texture(name));
+    public Cloud(World world, String cloud, String cloudName, float x, float y) {
+        super(new Texture(cloud));
         this.world = world;
+        this.cloudName = cloudName;
         this.setPosition(
                 x - this.getWidth() / 2,
                 y - this.getHeight() / 2);
@@ -31,25 +31,28 @@ public class Player extends Sprite {
 
     private void createBody() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(getX() / GameInfo.PPM, getY() / GameInfo.PPM);
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(getWidth() / 2 / GameInfo.PPM,
+        shape.setAsBox(getWidth() / GameInfo.PPM,
                 getHeight() / 2 / GameInfo.PPM);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 1f;
         Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData("Player");
+        fixture.setUserData("Cloud");
+        fixture.setSensor(true);
         shape.dispose();
+
     }
 
-    public void updatePlayer() {
-        this.setPosition(body.getPosition().x * GameInfo.PPM, body.getPosition().y * GameInfo.PPM);
+    public void setPosition(float x, float y) {
+        setPosition(x, y);
+        createBody();
     }
 
-    public Body getBody() {
-        return body;
+    public String getCloudName() {
+        return cloudName;
     }
 }

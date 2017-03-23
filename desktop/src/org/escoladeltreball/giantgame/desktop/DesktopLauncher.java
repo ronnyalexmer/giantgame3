@@ -4,7 +4,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import org.escoladeltreball.giantgame.GameInfo;
-import org.escoladeltreball.giantgame.MainGame;
+import org.escoladeltreball.giantgame.GameMain;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -13,6 +13,6 @@ public class DesktopLauncher {
 		config.width = GameInfo.WIDTH;
 		config.height = GameInfo.HEIGHT;
 
-		new LwjglApplication(new MainGame(), config);
+		new LwjglApplication(new GameMain(), config);
 	}
 }

@@ -9,9 +9,9 @@ public class GameInfo {
     public static final int WIDTH = 480;
     public static final int HEIGHT = 800;
 
-    public static final int H_WIDTH = WIDTH / 2;
-    public static final int H_HEIGHT = HEIGHT / 2;
+    public static final float H_WIDTH = WIDTH / 2f;
+    public static final float H_HEIGHT = HEIGHT / 2f;
 
-
+    public static final int PPM = 100;
 
 }
