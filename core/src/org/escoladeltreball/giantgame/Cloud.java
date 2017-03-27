@@ -19,23 +19,24 @@ public class Cloud extends Sprite {
     private Body body;
     private String cloudName;
 
-    public Cloud(World world, String cloud, String cloudName, float x, float y) {
+    public Cloud(World world,  String cloud, String cloudName, float x, float y) {
         super(new Texture(cloud));
         this.world = world;
         this.cloudName = cloudName;
-        this.setPosition(
-                x - this.getWidth() / 2,
-                y - this.getHeight() / 2);
+        setSpritePosition(x, y);
+//        this.setPosition(
+//                x - this.getWidth() / 2,
+//                y - this.getHeight() / 2);
         createBody();
     }
 
     private void createBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(getX() / GameInfo.PPM, getY() / GameInfo.PPM);
+        bodyDef.position.set((getX() + getWidth() / 2f - 50) / GameInfo.PPM, (getY() + getHeight() / 2) / GameInfo.PPM);
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(getWidth() / GameInfo.PPM,
+        shape.setAsBox((getWidth()  / 2 - 15) / GameInfo.PPM,
                 getHeight() / 2 / GameInfo.PPM);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -47,7 +48,8 @@ public class Cloud extends Sprite {
 
     }
 
-    public void setPosition(float x, float y) {
+    public void setSpritePosition(float x, float y) {
+
         setPosition(x, y);
         createBody();
     }

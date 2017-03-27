@@ -47,7 +47,7 @@ public class MainMenu implements Screen, ContactListener {
                 GameInfo.H_HEIGHT + 250
                 );
 
-        cloud = new Cloud(world, "cloud-1.png", GameInfo.H_WIDTH, GameInfo.H_HEIGHT - 250);
+        cloud = new Cloud(world, "cloud-1.png", "Cloud 1", GameInfo.H_WIDTH, GameInfo.H_HEIGHT - 250);
 
     }
 

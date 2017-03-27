@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -22,7 +25,10 @@ public class GamePlay implements Screen {
     private OrthographicCamera mainCamera;
     private Viewport gameViewport;
     private float lastYposition;
-
+    private OrthographicCamera box2DCamera;
+    private Box2DDebugRenderer debugRenderer;
+    private World world;
+    private CloudsController cloudsController;
 
     public GamePlay(GameMain game) {
         this.game = game;
@@ -30,6 +36,12 @@ public class GamePlay implements Screen {
         mainCamera = new OrthographicCamera(GameInfo.WIDTH, GameInfo.HEIGHT);
         mainCamera.position.set(GameInfo.H_WIDTH, GameInfo.H_HEIGHT, 0);
         gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
+        box2DCamera = new OrthographicCamera();
+        box2DCamera.setToOrtho(false, GameInfo.WIDTH / GameInfo.PPM, GameInfo.HEIGHT / GameInfo.PPM);
+        box2DCamera.position.set(GameInfo.H_WIDTH, GameInfo.H_HEIGHT, 0);
+        debugRenderer = new Box2DDebugRenderer();
+        world = new World(new Vector2(0, GameInfo.GRAVITY), true);
+        cloudsController = new CloudsController(world);
         createBackgrounds();
     }
 
@@ -57,8 +69,12 @@ public class GamePlay implements Screen {
         batch.begin();
 
         drawBackgrounds();
+        cloudsController.drawClouds(batch);
 
         batch.end();
+
+
+        //debugRenderer.render(world, box2DCamera.combined);
 
         batch.setProjectionMatrix(mainCamera.combined);
         mainCamera.update();
@@ -71,7 +87,7 @@ public class GamePlay implements Screen {
     }
 
     private void moveCamera() {
-        mainCamera.position.y -= 10;
+        mainCamera.position.y -= 1;
     }
 
     /**

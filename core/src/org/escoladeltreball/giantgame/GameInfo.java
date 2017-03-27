@@ -14,4 +14,6 @@ public class GameInfo {
 
     public static final int PPM = 100;
 
+    public static final float GRAVITY = -9.8f;
+
 }
