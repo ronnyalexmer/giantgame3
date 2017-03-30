@@ -3,6 +3,7 @@ package org.escoladeltreball.giantgame;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -20,12 +21,10 @@ public class Player extends Sprite {
     private World world;
     private Body body;
 
-    public Player(World world, String name, float x, float y) {
-        super(new Texture(name));
+    public Player(World world, float x, float y) {
+        super(new Texture("player-1.png"));
         this.world = world;
-        this.setPosition(
-                x - this.getWidth() / 2,
-                y - this.getHeight() / 2);
+        this.setPosition(x ,y);
         createBody();
     }
 
@@ -39,10 +38,15 @@ public class Player extends Sprite {
                 getHeight() / 2 / GameInfo.PPM);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 1f;
+        fixtureDef.density = 4f; // mass of the body
+        fixtureDef.friction = 2f; // dont slide
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData("Player");
         shape.dispose();
+    }
+
+    public void drawPlayer(SpriteBatch batch) {
+        batch.draw(this, getX() + getWidth() / 2f , getY() - getHeight() / 2f);
     }
 
     public void updatePlayer() {

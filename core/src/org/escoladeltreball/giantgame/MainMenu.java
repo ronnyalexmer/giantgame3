@@ -42,7 +42,7 @@ public class MainMenu implements Screen, ContactListener {
         bg = new Texture("game-bg.png");
         player = new Player(
                 world,
-                "player-1.png",
+
                 GameInfo.H_WIDTH,
                 GameInfo.H_HEIGHT + 250
                 );

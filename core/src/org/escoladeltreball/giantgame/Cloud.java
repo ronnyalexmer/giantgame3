@@ -43,7 +43,7 @@ public class Cloud extends Sprite {
         fixtureDef.density = 1f;
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData("Cloud");
-        fixture.setSensor(true);
+        fixture.setSensor(false);
         shape.dispose();
 
     }

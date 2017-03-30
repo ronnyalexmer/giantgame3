@@ -29,6 +29,7 @@ public class GamePlay implements Screen {
     private Box2DDebugRenderer debugRenderer;
     private World world;
     private CloudsController cloudsController;
+    private Player player;
 
     public GamePlay(GameMain game) {
         this.game = game;
@@ -42,6 +43,7 @@ public class GamePlay implements Screen {
         debugRenderer = new Box2DDebugRenderer();
         world = new World(new Vector2(0, GameInfo.GRAVITY), true);
         cloudsController = new CloudsController(world);
+        player = cloudsController.positionThePlayer(player);
         createBackgrounds();
     }
 
@@ -71,23 +73,30 @@ public class GamePlay implements Screen {
         drawBackgrounds();
         cloudsController.drawClouds(batch);
 
+        player.drawPlayer(batch);
+
         batch.end();
 
 
-        //debugRenderer.render(world, box2DCamera.combined);
+        //  debugRenderer.render(world, box2DCamera.combined);
 
         batch.setProjectionMatrix(mainCamera.combined);
         mainCamera.update();
+
+        player.updatePlayer();
+        world.step(Gdx.graphics.getDeltaTime(), 6, 2);
 
     }
 
     private void update(float delta) {
         moveCamera();
         checkBackgoundsOutOfBounds();
+        cloudsController.setCameraY(mainCamera.position.y);
+        cloudsController.createAndArrangeClouds();
     }
 
     private void moveCamera() {
-        mainCamera.position.y -= 1;
+        mainCamera.position.y -=0.5;
     }
 
     /**
